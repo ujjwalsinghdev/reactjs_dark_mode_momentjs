@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react"
+import data from "./data"
+import Article from "./Article"
 
 function App() {
+  const [theme, setTheme] = useState("dark-theme")
+
+  const toggleTheme = () => {
+    if (theme === "light-theme") {
+      setTheme("dark-theme")
+    } else {
+      setTheme("light-theme")
+    }
+  }
+
+  useEffect(() => {
+    document.documentElement.className = theme
+  }, [theme])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <main>
+      <nav>
+        <div>
+          <h1>overreacted</h1>
+          <button onClick={toggleTheme}>toggle</button>
+        </div>
+      </nav>
+      <section>
+        {data.map((item) => {
+          return <Article key={item.id} {...item}></Article>
+        })}
+      </section>
+    </main>
+  )
 }
 
-export default App;
+export default App
